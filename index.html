@@ -16,6 +16,26 @@
     <title>File Input Trigger</title>
 </head>
 <body>
+    <!-- FullScreenToggleButton -->
+    <button class="js-toggle-fullscreen-btn toggle-fullscreen-btn" aria-label="Enter fullscreen mode" hidden>
+        <svg class="toggle-fullscreen-svg" width="28" height="28" viewBox="-2 -2 28 28">
+            <g class="icon-fullscreen-enter">
+                <path d="M 2 9 v -7 h 7" />
+                <path d="M 22 9 v -7 h -7" />
+                <path d="M 22 15 v 7 h -7" />
+                <path d="M 2 15 v 7 h 7" />
+            </g>
+            
+            <g class="icon-fullscreen-leave">
+                <path d="M 24 17 h -7 v 7" />
+                <path d="M 0 17 h 7 v 7" />
+                <path d="M 0 7 h 7 v -7" />
+                <path d="M 24 7 h -7 v -7" />
+            </g>
+        </svg>
+    </button>
+
+    <!-- Project Dropdown -->
     <select id="modelDropdown">
         <option value="0555">0555</option>
         <option value="0258">0258</option>
@@ -49,6 +69,7 @@
 
     <script type="module" src="main.js"></script>
     <script type="module" src="model3d.js"></script>
+    <script type="module" src="basics.js"></script>
 
 </body>
 </html>
