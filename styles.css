@@ -1,0 +1,193 @@
+
+    body {
+
+      height: 100vh;
+
+    margin: 0;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    font-family: system-ui;
+
+    background: rgb(23,31,56);
+    background: -moz-linear-gradient(0deg, rgba(23,31,56,1) 0%, rgba(23,31,56,0.9906671348314607) 10%, rgba(23,31,56,0.9756109550561798) 20%, rgba(23,31,56,0.9541502808988764) 30%, rgba(23,31,56,0.9956109550561798) 40%, rgba(23,31,56,0.9962851123595506) 50%, rgba(23,31,56,0.9906671348314607) 60%, rgba(23,31,56,0.9756109550561798) 70%, rgba(23,31,56,0.9541502808988764) 80%, rgba(23,31,56,0.9962851123595506) 90%);
+    background: -webkit-linear-gradient(0deg, rgba(23,31,56,1) 0%, rgba(23,31,56,0.9906671348314607) 10%, rgba(23,31,56,0.9756109550561798) 20%, rgba(23,31,56,0.9541502808988764) 30%, rgba(23,31,56,0.9956109550561798) 40%, rgba(23,31,56,0.9962851123595506) 50%, rgba(23,31,56,0.9906671348314607) 60%, rgba(23,31,56,0.9756109550561798) 70%, rgba(23,31,56,0.9541502808988764) 80%, rgba(23,31,56,0.9962851123595506) 90%);
+    background: linear-gradient(0deg, rgba(23,31,56,1) 0%, rgba(23,31,56,0.9906671348314607) 10%, rgba(23,31,56,0.9756109550561798) 20%, rgba(23,31,56,0.9541502808988764) 30%, rgba(23,31,56,0.9956109550561798) 40%, rgba(23,31,56,0.9962851123595506) 50%, rgba(23,31,56,0.9906671348314607) 60%, rgba(23,31,56,0.9756109550561798) 70%, rgba(23,31,56,0.9541502808988764) 80%, rgba(23,31,56,0.9962851123595506) 90%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#171f38",endColorstr="#171f38",GradientType=1);
+
+}
+
+#details {
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  background: rgba(151, 202, 238, 0.5);
+
+}
+
+.stuffContainer{
+  width: 30vw;
+  height: 100%;
+  position:absolute;
+  top: 0px;
+  left: 0px;
+  padding: 20px;
+  background-color: aquamarine;
+}
+
+h1 {
+    font-size: 5rem !important;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    max-width: 40vw;
+}
+
+p{
+    margin: 0;
+    max-width: 40vw;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 30vw;
+}
+
+.cta {
+    border: solid 2.5px #48e59a;
+    padding: 16px 26px 16px 26px;
+    margin-top: 71px;
+    cursor: pointer;
+    box-sizing: border-box;
+    width: fit-content;
+    font-size: larger;
+    font-weight: 700;
+}
+
+#controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+button {
+    margin: 5px;
+}
+
+.section {
+    height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 80px 40vw 80px 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bgw {
+}
+
+.bgg {
+}
+
+.g{
+    color: #48e59a;
+}
+/* glid 3 steps */
+.glide {
+  width: 500px;
+  height: 250px;
+}
+
+.glide__slide img {
+  width: 100%;
+  height: 250px;
+  /* Needs object-fit polyfill for IE */
+  object-fit: cover;
+}
+
+.glide__bullets {
+  display: flex;
+  justify-content: center;
+  margin-right: -10px;
+  margin-left: -10px;
+}
+
+.glide__bullet {
+  position: relative;
+  display: flex;
+  flex: 0 1 calc(100% / 3);
+  max-width: calc(100% / 3);
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  color: #48e59a;
+  height: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: transparent;
+  box-shadow: inset 0px -4px 0px 0px lightgrey;
+}
+
+.glide__bullet:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  display: block;
+  opacity: 0;
+  transform: translateX(-100%);
+  background-color: #000;
+  transition: transform 5s;
+}
+
+.glide__bullet--active:before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+#backToTopBtn {
+  display: none; /* Hide button by default */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 16px;
+  padding: 10px 15px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  transition: all .3 s ease-in-out;
+}
+
+/* Show the button when the user scrolls down 20px from the top */
+.show-btn {
+  display: block !important;
+}
+
+#glassBlurBG{
+  z-index: 777;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 0px;
+  padding: 47px;
+  margin-left: -25px;
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
