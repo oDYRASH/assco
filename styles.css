@@ -248,3 +248,44 @@ button {
 .toggle-fullscreen-btn:focus  {
   border: none;
 }
+
+
+/* handle screen rotating */
+#rotate-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.rotate-icon {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+#content {
+  display: none;
+}

@@ -35,3 +35,28 @@ if(document.fullscreenEnabled || document.webkitFullscreenEnabled) {
 		}
 	}
 }
+
+
+//Responsive handler 'rotateScreen' for mobile devices
+function hideOverlay() {
+    document.getElementById('rotate-overlay').style.display = 'none';
+}
+
+// Optional: Detect orientation change and show overlay on portrait
+window.addEventListener('orientationchange', function() {
+    if (window.innerHeight > window.innerWidth) {
+        document.getElementById('rotate-overlay').style.display = 'flex';
+        document.getElementById('content').style.display = 'none';
+    } else {
+        document.getElementById('rotate-overlay').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+    }
+});
+
+// Initial check
+if (window.innerHeight > window.innerWidth) {
+    document.getElementById('rotate-overlay').style.display = 'flex';
+} else {
+    document.getElementById('rotate-overlay').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+}

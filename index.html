@@ -15,6 +15,10 @@
     <meta charset="UTF-8">
     <title>File Input Trigger</title>
 </head>
+<div id="rotate-overlay">
+    <img src="rotate-icon.png" alt="Rotate Phone" class="rotate-icon">
+    <button onclick="hideOverlay()">Rotate Screen</button>
+</div>
 <body>
     <!-- FullScreenToggleButton -->
     <button class="js-toggle-fullscreen-btn toggle-fullscreen-btn" aria-label="Enter fullscreen mode" hidden>
@@ -34,6 +38,7 @@
             </g>
         </svg>
     </button>
+    <!-- Rotate screen on phone handling  -->
 
     <!-- Project Dropdown -->
     <select id="modelDropdown">
