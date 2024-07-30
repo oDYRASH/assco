@@ -110,6 +110,7 @@ export class SceneHandler {
         const center = box.getCenter(new THREE.Vector3());
         this.model.position.set(-center.x, -center.y, -center.z);
   
+
         this.setupCameraForModel()
         this.generateUi()
       }, undefined, (error) => {
@@ -133,33 +134,79 @@ export class SceneHandler {
       this.controls.target.set(center.x, center.y, center.z);
     }
   
+    setupCameraForGroup(childrenArray) {
+
+      if (!this.model) {
+        alert('No model loaded');
+        return;
+      }
+    
+      if (!childrenArray || childrenArray.length === 0) {
+        console.warn('No children provided');
+        return;
+      }
+    
+      // Create a temporary parent to hold the children
+      const tempParent = new THREE.Group();
+      childrenArray.forEach(child => tempParent.add(child));
+    
+      // Calculate bounding box and center for the group
+      const box = new THREE.Box3().setFromObject(tempParent);
+      const center = box.getCenter(new THREE.Vector3());
+    
+      // Set camera position and lookAt
+      this.camera.position.set(center.x, center.y + 5, center.z + 14);
+      this.camera.lookAt(center);
+    
+      // Update orbit controls target (optional)
+      if (this.controls) {
+        this.controls.target.set(center.x, center.y, center.z);
+      }
+    }
+    
+
     setupNamingOnClick() {
 
       // Add event listener for mousedown
-      window.addEventListener('mousedown', this.onMouseDown, false);
+      // window.addEventListener('mousedown', this.onMouseDown, false);
+      return
 
     }
 
-    onMouseDown(event) {
-      // Calculate mouse position in normalized device coordinates (-1 to +1) for both components
-      this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  //   onMouseDown(event) {
+  //     // Calculate mouse position in normalized device coordinates (-1 to +1) for both components
+  //     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  //     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-      // Update the raycaster with the camera and mouse position
-      this.raycaster.setFromCamera(this.mouse, camera);
+  //     // Update the raycaster with the camera and mouse position
+  //     this.raycaster.setFromCamera(this.mouse, camera);
 
-      // Calculate objects intersecting the raycaster
-      const intersects = this.raycaster.intersectObjects(scene.children, true);
+  //     // Calculate objects intersecting the raycaster
+  //     const intersects = this.raycaster.intersectObjects(scene.children, true);
 
-      if (intersects.length > 0) {
-          console.log('Clicked piece name:', intersects[0].object.name);
-      }
-  }
+  //     if (intersects.length > 0) {
+  //         console.log('Clicked piece name:', intersects[0].object.name);
+  //     }
+  // }
 
     animate() {
       requestAnimationFrame(this.animate.bind(this));
       this.controls.update();
       this.renderer.render(this.scene, this.camera);
+      update(); // Update tweens
+      
+    }
+
+    allowTransprencyOnChild(child){
+      if (child.isMesh) {
+          child.material.transparent = true; // Ensure transparency support
+          child.material.opacity = 1; // Set initial opacity to 1
+          child.userData.originalPosition = child.position.clone();
+          child.material = child.material.clone();
+
+          const direction = new THREE.Vector3().copy(child.position).normalize();
+          child.userData.explodedPosition = child.position.clone().add(direction.multiplyScalar(4));
+      }
     }
 
     generateUi(){
@@ -172,7 +219,6 @@ export class SceneHandler {
       let currentGroupName = null;
   
       this.model.traverse((child) => {
-
           const name = child.name;
           // console.log(name  + "  " + isPanelName(name) + "  " + isPanelPart(name))
           let groupName = isPanelName(name)
@@ -183,6 +229,7 @@ export class SceneHandler {
               this.groups[currentGroupName] = [];
 
           } else if (currentGroupName && isPanelPart(name)) {
+              this.allowTransprencyOnChild(child);
               // child.parent.remove(child);
               this.groups[currentGroupName].push(child);
           }
@@ -192,24 +239,39 @@ export class SceneHandler {
       console.log("Groups set")
     }
 
-    hideGroup(groupName){
-      this.groups[groupName].forEach((child) => {
-        child.visible = false;
-      });
-    }
+    hideAllGroups() {
+      this.model.traverse((child) => {
+        if (child.isMesh) {
 
-    showOnlyOneGroup(groupName){
-      for (const key of Object.keys(this.groups)) {
-        if (key === groupName) {
-            this.groups[key].forEach((child) => {
-                child.visible = true;
-            });
-        } else {
-            this.groups[key].forEach((child) => {
-                child.visible = false;
-            });
+            new Tween(child.material)
+                .to({ opacity: 0.15 }, 300)
+                .easing(Easing.Cubic.InOut)
+                .start();
         }
-    }
+    });
     }
 
-  }
+    toogleGroupVisibility(groupName) {
+
+      this.hideAllGroups();
+    
+      setTimeout(() => {
+
+        // this.setupCameraForGroup(this.groups[groupName]);
+
+        this.groups[groupName].forEach((child) => {
+          new Tween(child.material)
+              .to({ opacity: 1.00 }, 150)
+              .easing(Easing.Cubic.InOut)
+              .start();
+  
+        });
+
+      }, 301);
+
+      
+
+    }
+    
+
+}

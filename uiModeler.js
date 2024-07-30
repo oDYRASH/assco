@@ -37,7 +37,7 @@ export class uiModeler {
                     // Add event listener for click
                     span.addEventListener('click', (event) => {
                         console.log('Clicked:', event.target.textContent);
-                        building.hideGroup(value);
+                        building.toogleGroupVisibility(value);
                     });
     
                 });
