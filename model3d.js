@@ -198,4 +198,18 @@ export class SceneHandler {
       });
     }
 
+    showOnlyOneGroup(groupName){
+      for (const key of Object.keys(this.groups)) {
+        if (key === groupName) {
+            this.groups[key].forEach((child) => {
+                child.visible = true;
+            });
+        } else {
+            this.groups[key].forEach((child) => {
+                child.visible = false;
+            });
+        }
+    }
+    }
+
   }
