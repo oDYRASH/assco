@@ -26,3 +26,32 @@ export function isPanelPart(string){
     return panelPieces.some(piece => string.includes(piece));
 
 }
+
+export function sortGroups(array){
+    array.sort((a, b) => {
+
+        //handle no number in string
+        if(!a.match(/\d+$/)){
+            return -1
+        }
+
+        let matchA = a.match(/\d+$/)
+        let matchB = b.match(/\d+$/)
+
+        if (!matchA || !matchB) {
+            return -1
+        }
+
+        // Extract the number from each element
+        let numA = parseInt(matchA[0]);
+        let numB = parseInt(matchB[0]);
+        
+
+      
+        // Compare the extracted numbers
+        return numA - numB;
+      });
+
+      return array
+    
+}

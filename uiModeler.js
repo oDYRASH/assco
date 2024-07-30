@@ -1,4 +1,4 @@
-import { groupByFirstLetter } from './utils.js';
+import { groupByFirstLetter, sortGroups } from './utils.js';
 
 export class uiModeler {
 
@@ -26,7 +26,8 @@ export class uiModeler {
     
                 // Create and append the div element
                 const div = document.createElement('div');
-                groups[key].forEach(value => {
+                const sortedGroupKeys = sortGroups(groups[key])
+                sortedGroupKeys.forEach(value => {
                     // Create and append the span element for each value
                     const span = document.createElement('button');
                     span.className = 'btn btn-light';
