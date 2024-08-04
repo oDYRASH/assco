@@ -3,8 +3,9 @@ import { GLTFLoader } from 'GLTFLoader';
 import { OrbitControls } from 'OrbitControls';
 import { Tween, Easing, update } from 'TWEEN';
 
-import {isPanelName, isPanelPart} from "./utils.js"
+import { isPanelName, isPanelPart } from "./utils.js"
 import { uiModeler } from "./uiModeler.js"
+import { setupGIFRecording } from "./threeJsToGIF.js"
 
 export class SceneHandler {
 
@@ -49,6 +50,8 @@ export class SceneHandler {
       console.log('naming initialized')
     }
   
+    
+
     getGroupsArray(){
       return this.groups
     }
@@ -60,10 +63,14 @@ export class SceneHandler {
     }
   
     initRenderer() {
-      this.renderer = new THREE.WebGLRenderer({ antialias: true });
-      this.renderer.setSize(window.innerWidth * 0.7, window.innerHeight);
+
+      const canvasObject = document.getElementById('main3dModelScene');
+
+      this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvasObject });
+      this.renderer.setSize(window.innerWidth * 0.618, window.innerHeight);
       this.renderer.setClearColor(this.clearColor, 0); // Set background color
-      document.body.appendChild(this.renderer.domElement);
+      canvasObject.__threeRenderer = this.renderer;
+      // document.body.appendChild(this.renderer.domElement);
     }
   
     initLights() {
@@ -89,7 +96,7 @@ export class SceneHandler {
     onWindowResize() {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth * 0.7, window.innerHeight);
+      this.renderer.setSize(window.innerWidth * 0.618, window.innerHeight);
     }
   
     loadModel(fileName) {
@@ -110,6 +117,7 @@ export class SceneHandler {
         const center = box.getCenter(new THREE.Vector3());
         this.model.position.set(-center.x, -center.y, -center.z);
   
+        this.pivot = pivot;
 
         this.setupCameraForModel()
         this.generateUi()
@@ -118,11 +126,28 @@ export class SceneHandler {
       });
     }
   
+    makeSpin() {
+      if (!this.model) {
+        alert('No model loaded');
+        return;
+      }
+    
+      if (this.pivot) {
+        new Tween(this.pivot.rotation)
+          .to({ y: this.pivot.rotation.y + Math.PI * 2 }, 1500)
+          .start();
+      }
+    }
+
     setupCameraForModel() {
 
       if(!this.model) {
         alert('No model loaded');
       }
+
+      // setup record GIF
+      setupGIFRecording('main3dModelScene', 'recordGIF', this);
+
 
       console.log('model loaded')
       const box = new THREE.Box3().setFromObject(this.model);

@@ -1,4 +1,5 @@
 import { SceneHandler} from './model3d.js';
+import { setupGIFRecording } from './threeJsToGIF.js';
 
 const SH = new SceneHandler()
 
@@ -10,14 +11,7 @@ document.getElementById('modelDropdown').addEventListener('change', function (ev
 });
 
 console.log("Loading model...")
-SH.loadModel('0555').then(() => {
-    console.log("Model loaded FROM MAIN") 
-
-    SH.setupCameraForModel()
-    SH.generateUi()
-    
-})
-
+SH.loadModel('0555')
 // // Constants
 // const GLB_FILE_NAME = '0555';
 
